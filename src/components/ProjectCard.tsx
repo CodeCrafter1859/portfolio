@@ -1,4 +1,12 @@
-import { Blocks, BrainCircuit, Database, Layers3, Plus, X } from "lucide-react";
+import {
+  Blocks,
+  BrainCircuit,
+  Database,
+  ExternalLink,
+  Layers3,
+  Plus,
+  X,
+} from "lucide-react";
 import { useEffect, useRef } from "react";
 import type { Project } from "../constants/profile";
 const themes = {
@@ -60,15 +68,28 @@ export function ProjectCard({ project }: { project: Project }) {
             </span>
           ))}
         </div>
-        <button
-          className="flex min-h-11 w-fit items-center gap-3 rounded border border-white/15 px-4 text-xs font-medium uppercase tracking-wide transition-colors hover:border-lime hover:text-lime"
-          onClick={() => {
-            dialog.current?.showModal();
-            document.body.classList.add("overflow-hidden");
-          }}
-        >
-          View project <Plus size={15} aria-hidden="true" />
-        </button>
+        <div className="flex flex-wrap gap-3">
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Visit ${project.name} live site (opens in a new tab)`}
+              className="flex min-h-11 w-fit items-center gap-3 rounded border border-white/15 px-4 text-xs font-medium uppercase tracking-wide transition-colors hover:border-lime hover:text-lime"
+            >
+              Live site <ExternalLink size={15} aria-hidden="true" />
+            </a>
+          )}
+          <button
+            className="flex min-h-11 w-fit items-center gap-3 rounded border border-white/15 px-4 text-xs font-medium uppercase tracking-wide transition-colors hover:border-lime hover:text-lime"
+            onClick={() => {
+              dialog.current?.showModal();
+              document.body.classList.add("overflow-hidden");
+            }}
+          >
+            View project <Plus size={15} aria-hidden="true" />
+          </button>
+        </div>
       </article>
       <dialog
         ref={dialog}

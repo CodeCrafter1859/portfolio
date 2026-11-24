@@ -5,7 +5,7 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/ashutosh-sinha-470343251",
   leetcode: "https://leetcode.com/u/ashu_okk/",
   summary:
-    "Software Engineer with 2+ years of experience building backend and full-stack applications using Python, FastAPI, Django, React, and PostgreSQL. Experienced in designing RESTful APIs, integrating AWS services, developing scalable web applications, authentication, payments, and AI-powered solutions. Focused on clean architecture, performance, and maintainable software development.",
+    "Full Stack Engineer with 2+ years of experience building backend and full-stack applications using Python, FastAPI, Django, React, and PostgreSQL. Experienced in designing RESTful APIs, integrating AWS services, developing scalable web applications, authentication, payments, and AI-powered solutions. Focused on clean architecture, performance, and maintainable software development.",
 };
 export const navigation = [
   "Home",
@@ -17,6 +17,7 @@ export const navigation = [
 ];
 export interface Project {
   name: string;
+  liveUrl?: string;
   description: string;
   stack: string[];
   details: string[];
@@ -25,6 +26,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     name: "Bharatnova",
+    liveUrl: "https://www.bharatnova.com/",
     theme: "orange",
     description:
       "A full-stack social platform for sharing content, discovering personalized feeds, and streaming media.",
@@ -37,6 +39,7 @@ export const projects: Project[] = [
   },
   {
     name: "SereniBase",
+    liveUrl: "https://www.aptlogica.com/sereni-base/",
     theme: "teal",
     description:
       "A no-code database platform with relational data, customizable views, and a spreadsheet-like interface.",
@@ -49,6 +52,7 @@ export const projects: Project[] = [
   },
   {
     name: "Learning Record Store",
+    liveUrl: "https://www.serenilrs.com/",
     theme: "blue",
     description:
       "A multi-tenant learning admin platform with xAPI validation and configurable analytics dashboards.",

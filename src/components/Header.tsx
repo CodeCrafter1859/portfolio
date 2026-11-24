@@ -23,10 +23,10 @@ export function Header() {
       <div className="mx-auto flex min-h-20 max-w-6xl items-center justify-between px-5 sm:px-8">
         <a
           href="#home"
-          aria-label="Ashutosh Sinha home"
+          aria-label="My Portfolio home"
           className="text-2xl font-bold tracking-tight"
         >
-          AS<span className="text-lime">.</span>
+          My Portfolio
         </a>
         <button
           className="rounded-md p-3 hover:bg-white/10 md:hidden"

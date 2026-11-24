@@ -62,7 +62,7 @@ export function Hero() {
     >
       <div className="relative z-10 pb-10 md:py-16">
         <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-lime sm:text-sm">
-          Full Stack & AI Developer
+          Full Stack Engineer
         </p>
         <h1 className="text-5xl leading-[0.98] font-bold tracking-tight sm:text-6xl lg:text-7xl">
           ASHUTOSH
@@ -124,7 +124,7 @@ export function Projects() {
   const [showAll, setShowAll] = useState(false);
   return (
     <section id="projects" className={section}>
-      <SectionHeading eyebrow="Featured work" title="Selected Projects">
+      <SectionHeading eyebrow="Featured work" title="Worked On">
         <button
           onClick={() => setShowAll(!showAll)}
           aria-expanded={showAll}
@@ -365,9 +365,9 @@ export function Footer() {
     <footer className="mx-auto grid max-w-6xl gap-8 px-5 pb-8 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
       <div>
         <a href="#home" className="text-3xl font-bold">
-          AS<span className="text-lime">.</span>
+          Ashutosh Sinha
         </a>
-        <p className="mt-3 text-sm text-zinc-400">Full Stack & AI Developer</p>
+        <p className="mt-3 text-sm text-zinc-400">Full Stack Engineer</p>
         <p className="mt-2 text-sm text-zinc-500">
           Clean architecture. Thoughtful software.
         </p>
