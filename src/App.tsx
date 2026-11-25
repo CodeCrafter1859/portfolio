@@ -1,6 +1,7 @@
 import "./App.css";
 import { useScrollReveal } from "./hooks/useScrollReveal";
 import { Header } from "./components/Header";
+import { BackToTop } from "./components/BackToTop";
 import {
   Hero,
   Projects,
@@ -38,6 +39,7 @@ export default function App() {
         </div>
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }

@@ -44,25 +44,25 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <>
       <article
-        className={`flex h-full flex-col rounded-lg border bg-linear-to-br p-6 transition-transform duration-200 motion-safe:hover:-translate-y-1 ${themes[project.theme]}`}
+        className={`group relative flex h-full flex-col rounded-2xl border bg-linear-to-br p-6 transition duration-300 ease-out hover:border-white/30 hover:shadow-xl hover:shadow-black/20 focus-within:border-lime/40 motion-safe:hover:-translate-y-1 motion-reduce:transition-none ${themes[project.theme]}`}
       >
         <Icon
           aria-hidden="true"
-          size={44}
+          size={56}
           strokeWidth={1.7}
-          className={`mb-5 ${colors[project.theme]}`}
+          className={`mb-6 rounded-2xl border border-current/10 bg-white/5 p-2 transition-transform duration-300 motion-safe:group-hover:scale-110 ${colors[project.theme]}`}
         />
-        <h3 className="mb-3 text-xl font-semibold tracking-tight">
+        <h3 className="mb-3 text-2xl font-semibold tracking-tight">
           {project.name}
         </h3>
-        <p className="mb-5 flex-1 text-sm leading-relaxed text-zinc-300">
+        <p className="mb-6 flex-1 text-base leading-relaxed text-zinc-300">
           {project.description}
         </p>
         <div className="mb-5 flex flex-wrap gap-2">
           {project.stack.map((tech) => (
             <span
               key={tech}
-              className="rounded border border-white/10 px-2 py-1 text-xs text-zinc-400"
+              className="rounded-full border border-white/10 bg-white/3 px-3 py-1 text-xs text-zinc-400"
             >
               {tech}
             </span>
@@ -75,13 +75,13 @@ export function ProjectCard({ project }: { project: Project }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Visit ${project.name} live site (opens in a new tab)`}
-              className="flex min-h-11 w-fit items-center gap-3 rounded border border-white/15 px-4 text-xs font-medium uppercase tracking-wide transition-colors hover:border-lime hover:text-lime"
+              className="flex min-h-11 w-fit items-center gap-3 rounded-full border border-white/15 px-4 text-xs font-medium uppercase tracking-wide transition duration-300 hover:border-lime hover:bg-lime/5 hover:text-lime motion-safe:active:scale-95"
             >
               Live site <ExternalLink size={15} aria-hidden="true" />
             </a>
           )}
           <button
-            className="flex min-h-11 w-fit items-center gap-3 rounded border border-white/15 px-4 text-xs font-medium uppercase tracking-wide transition-colors hover:border-lime hover:text-lime"
+            className="flex min-h-11 w-fit items-center gap-3 rounded-full border border-white/15 px-4 text-xs font-medium uppercase tracking-wide transition duration-300 hover:border-lime hover:bg-lime/5 hover:text-lime motion-safe:active:scale-95"
             onClick={() => {
               dialog.current?.showModal();
               document.body.classList.add("overflow-hidden");
@@ -97,7 +97,7 @@ export function ProjectCard({ project }: { project: Project }) {
         onClick={(event) => {
           if (event.target === event.currentTarget) dialog.current?.close();
         }}
-        className="fixed inset-0 m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-xl border border-white/15 bg-panel p-6 text-white shadow-2xl backdrop:bg-black/80 sm:p-8"
+        className="opacity-0 scale-95 open:opacity-100 open:scale-100 starting:open:opacity-0 starting:open:scale-95 transition-[opacity,scale,display,overlay] transition-discrete duration-300 ease-out motion-reduce:transition-none fixed inset-0 m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-xl border border-white/15 bg-panel p-6 text-white shadow-2xl backdrop:bg-black/80 sm:p-8"
       >
         <div className="mb-6 flex items-start justify-between gap-4">
           <Icon

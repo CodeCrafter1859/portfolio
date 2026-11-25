@@ -100,16 +100,32 @@ export function useScrollReveal() {
         element = element.parentElement;
       }
     };
+    // Entrance delays must not slow down later hover and button feedback.
+    const onTransitionEnd = (event: TransitionEvent) => {
+      if (
+        event.propertyName !== "opacity" ||
+        !(event.target instanceof HTMLElement)
+      )
+        return;
+      if (
+        registered.has(event.target) &&
+        event.target.dataset.revealed === "true"
+      ) {
+        event.target.classList.remove(...baseClasses, ...delays);
+      }
+    };
     register();
     const mutations = new MutationObserver(register);
     mutations.observe(container, { childList: true, subtree: true });
     preference.addEventListener("change", onPreferenceChange);
     container.addEventListener("focusin", onFocus);
+    container.addEventListener("transitionend", onTransitionEnd);
     return () => {
       observer.disconnect();
       mutations.disconnect();
       preference.removeEventListener("change", onPreferenceChange);
       container.removeEventListener("focusin", onFocus);
+      container.removeEventListener("transitionend", onTransitionEnd);
       registered.forEach((element) => {
         element.classList.remove(...baseClasses, ...delays, ...hiddenClasses);
         delete element.dataset.revealed;

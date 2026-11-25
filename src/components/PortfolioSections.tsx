@@ -17,6 +17,7 @@ import {
 import portrait from "../assets/my_pic.jpeg";
 import resume from "../assets/CV_Ashutosh_Sinha.pdf";
 
+import { CopyEmail } from "./CopyEmail";
 import { SectionHeading } from "./SectionHeading";
 import { ProjectCard } from "./ProjectCard";
 import {
@@ -28,9 +29,9 @@ import {
 } from "../constants/profile";
 
 const button =
-  "inline-flex min-h-11 items-center justify-center gap-3 rounded border px-5 py-3 text-xs font-semibold uppercase tracking-wide transition duration-200 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:active:scale-95 motion-reduce:transition-none";
+  "inline-flex min-h-11 items-center justify-center gap-3 rounded-full border px-6 py-3 text-sm font-semibold uppercase tracking-wide transition duration-200 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:active:scale-95 motion-reduce:transition-none";
 const currentYear = new Date().getFullYear();
-const section = "scroll-mt-6 border-t border-white/7 py-10 sm:py-12";
+const section = "scroll-mt-28 border-t border-white/7 py-14 sm:py-20";
 const capabilities = [
   {
     icon: Code2,
@@ -58,18 +59,18 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative mx-auto grid max-w-6xl scroll-mt-6 items-center overflow-hidden px-5 pt-12 sm:px-8 md:min-h-145 md:grid-cols-2 md:pt-0"
+      className="relative mx-auto grid max-w-6xl scroll-mt-28 items-center overflow-hidden px-5 pt-12 sm:px-8 md:min-h-160 md:grid-cols-2 md:pt-0"
     >
       <div data-reveal-group className="relative z-10 pb-10 md:py-16">
-        <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-lime sm:text-sm">
+        <p className="mb-6 w-fit rounded-full border border-lime/20 bg-lime/5 px-4 py-2 font-mono text-xs font-medium uppercase tracking-widest text-lime sm:text-sm">
           Full Stack Engineer
         </p>
-        <h1 className="text-5xl leading-[0.98] font-bold tracking-tight sm:text-6xl lg:text-7xl">
+        <h1 className="text-5xl leading-[1.02] font-bold tracking-tighter sm:text-6xl lg:text-8xl">
           ASHUTOSH
           <br />
-          SINHA
+          <span className="text-lime">SINHA</span>
         </h1>
-        <p className="mt-6 max-w-md text-base leading-relaxed text-zinc-400">
+        <p className="mt-7 max-w-md text-base leading-relaxed sm:text-lg text-zinc-400">
           I build scalable web applications and AI-powered solutions. Bringing
           together Python, React, and cloud technologies to solve real-world
           problems.
@@ -153,20 +154,23 @@ export function Skills() {
   return (
     <section id="skills" className={section}>
       <SectionHeading eyebrow="Tech stack" title="Technical Skills" />
-      <div className="grid overflow-hidden rounded-lg border border-white/5 bg-panel lg:grid-cols-[1fr_16rem]">
+      <div className="grid overflow-hidden rounded-2xl border border-white/10 bg-panel lg:grid-cols-[1fr_16rem]">
         <div data-reveal-group className="divide-y divide-white/5">
           {skillGroups.map((group) => (
             <div
               data-reveal="left"
               key={group.label}
-              className="grid gap-3 px-5 py-4 sm:grid-cols-[7rem_1fr]"
+              className="grid gap-3 px-5 py-5 transition-colors duration-300 hover:bg-white/3 sm:grid-cols-[7rem_1fr]"
             >
               <h3 className="text-sm font-medium text-zinc-300">
                 {group.label}
               </h3>
-              <div className="flex flex-wrap gap-x-5 gap-y-2">
+              <div className="flex flex-wrap gap-2">
                 {group.items.map((item) => (
-                  <span key={item} className="text-sm text-zinc-400">
+                  <span
+                    key={item}
+                    className="rounded-full border border-white/5 bg-white/5 px-3 py-1 text-sm text-zinc-300 transition-colors duration-300 hover:border-lime/30 hover:bg-lime/5 hover:text-lime"
+                  >
                     {item}
                   </span>
                 ))}
@@ -179,10 +183,13 @@ export function Skills() {
           className="grid gap-6 border-t border-white/5 p-6 sm:grid-cols-2 lg:grid-cols-1 lg:border-t-0 lg:border-l"
         >
           {capabilities.map(({ icon: Icon, title, text }) => (
-            <div key={title} className="flex gap-3">
+            <div
+              key={title}
+              className="group flex gap-3 rounded-xl p-2 transition-colors duration-300 hover:bg-white/5"
+            >
               <Icon
                 size={22}
-                className="shrink-0 text-lime"
+                className="shrink-0 text-lime transition-transform duration-300 motion-safe:group-hover:scale-110"
                 aria-hidden="true"
               />
               <div>
@@ -216,9 +223,9 @@ export function Experience() {
         {experience.map((job) => (
           <article
             key={job.company}
-            className="grid gap-5 md:grid-cols-[13rem_1fr]"
+            className="group grid gap-5 rounded-2xl border border-transparent p-3 transition-colors duration-300 hover:border-white/10 hover:bg-panel/50 sm:p-5 md:grid-cols-[13rem_1fr]"
           >
-            <div className="h-fit rounded bg-panel p-4">
+            <div className="h-fit rounded-xl border border-white/5 bg-panel p-5">
               <BriefcaseBusiness
                 size={22}
                 aria-hidden="true"
@@ -234,7 +241,7 @@ export function Experience() {
                 </h4>
                 <p className="text-xs text-zinc-400">{job.date}</p>
               </div>
-              <ul className="space-y-2 pl-4 text-sm leading-relaxed text-zinc-400">
+              <ul className="space-y-2 pl-4 text-base leading-relaxed text-zinc-400">
                 {job.points.map((point) => (
                   <li className="list-disc" key={point}>
                     {point}
@@ -257,8 +264,11 @@ export function About() {
         <p className="text-base leading-relaxed text-zinc-400">
           {profile.summary}
         </p>
-        <div className="flex gap-4 rounded-lg border border-white/5 bg-panel p-5">
-          <GraduationCap className="shrink-0 text-lime" aria-hidden="true" />
+        <div className="group flex gap-4 rounded-2xl border border-white/10 bg-panel p-6 transition-colors duration-300 hover:border-lime/30">
+          <GraduationCap
+            className="shrink-0 text-lime transition-transform duration-300 motion-safe:group-hover:scale-110"
+            aria-hidden="true"
+          />
           <div>
             <p className="mb-2 text-xs uppercase tracking-widest text-zinc-400">
               Education
@@ -287,7 +297,7 @@ export function Achievements() {
         </p>
         <h2
           id="achievement-title"
-          className="text-2xl font-semibold tracking-tight sm:text-3xl"
+          className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
         >
           Problem Solver
         </h2>
@@ -338,14 +348,14 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="mb-10 scroll-mt-6 rounded-lg border border-white/10 bg-linear-to-r from-panel via-purple-950/50 to-lime/50 p-6 sm:p-9"
+      className="mb-14 scroll-mt-28 rounded-3xl border border-white/10 bg-linear-to-r from-panel via-purple-950/50 to-lime/30 p-6 sm:p-10 lg:p-12"
     >
       <div data-reveal-group className="grid items-center gap-6 md:grid-cols-2">
         <div>
           <p className="mb-3 text-xs font-medium uppercase tracking-widest text-lime">
             Let's work together
           </p>
-          <h2 className="max-w-md text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
+          <h2 className="max-w-md text-3xl leading-tight font-semibold tracking-tight sm:text-4xl lg:text-5xl">
             Ready to build something amazing?
           </h2>
         </div>
@@ -360,6 +370,7 @@ export function Contact() {
           >
             Get in touch <Mail size={16} aria-hidden="true" />
           </a>
+          <CopyEmail />
         </div>
       </div>
     </section>

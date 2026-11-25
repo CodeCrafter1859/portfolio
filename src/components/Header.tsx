@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { navigation } from "../constants/profile";
 export function Header() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
+  const menuButton = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -19,16 +20,17 @@ export function Header() {
     return () => observer.disconnect();
   }, []);
   return (
-    <header className="relative z-20 border-b border-white/5 bg-background">
-      <div className="mx-auto flex min-h-20 max-w-6xl items-center justify-between px-5 sm:px-8">
+    <header className="sticky top-0 z-40 px-3 py-3 sm:px-6">
+      <div className="relative mx-auto flex min-h-16 max-w-6xl items-center justify-between rounded-2xl border border-white/10 bg-background/85 px-4 shadow-lg shadow-black/10 backdrop-blur-xl sm:px-6">
         <a
           href="#home"
           aria-label="My Portfolio home"
-          className="text-2xl font-bold tracking-tight"
+          className="text-lg font-bold tracking-tight transition-colors hover:text-lime sm:text-xl"
         >
           My Portfolio
         </a>
         <button
+          ref={menuButton}
           className="rounded-md p-3 hover:bg-white/10 md:hidden"
           aria-label={open ? "Close navigation" : "Open navigation"}
           aria-expanded={open}
@@ -41,9 +43,12 @@ export function Header() {
           id="main-navigation"
           aria-label="Main navigation"
           onKeyDown={(event) => {
-            if (event.key === "Escape") setOpen(false);
+            if (event.key === "Escape") {
+              setOpen(false);
+              menuButton.current?.focus();
+            }
           }}
-          className={`${open ? "flex" : "hidden"} absolute inset-x-0 top-full flex-col border-b border-white/10 bg-background p-5 md:static md:flex md:flex-row md:gap-7 md:border-0 md:p-0`}
+          className={`${open ? "flex" : "hidden"} absolute inset-x-0 top-full mt-2 flex-col rounded-2xl border border-white/10 bg-background p-4 shadow-xl md:static md:mt-0 md:flex md:flex-row md:gap-1 md:border-0 md:bg-transparent md:p-0 md:shadow-none lg:gap-2`}
         >
           {navigation.map((item) => (
             <a
@@ -53,7 +58,7 @@ export function Header() {
               aria-current={
                 active === item.toLowerCase() ? "location" : undefined
               }
-              className={`py-3 text-xs font-medium uppercase tracking-wider transition-colors hover:text-lime ${active === item.toLowerCase() ? "text-lime" : "text-zinc-300"}`}
+              className={`relative rounded-full px-3 py-3 text-xs font-medium uppercase tracking-wider transition-colors duration-300 hover:bg-white/5 hover:text-lime ${active === item.toLowerCase() ? "bg-lime/10 text-lime" : "text-zinc-300"}`}
             >
               {item}
             </a>
