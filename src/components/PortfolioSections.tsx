@@ -28,7 +28,7 @@ import {
 } from "../constants/profile";
 
 const button =
-  "inline-flex min-h-11 items-center justify-center gap-3 rounded border px-5 py-3 text-xs font-semibold uppercase tracking-wide transition-colors";
+  "inline-flex min-h-11 items-center justify-center gap-3 rounded border px-5 py-3 text-xs font-semibold uppercase tracking-wide transition duration-200 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:active:scale-95 motion-reduce:transition-none";
 const currentYear = new Date().getFullYear();
 const section = "scroll-mt-6 border-t border-white/7 py-10 sm:py-12";
 const capabilities = [
@@ -60,7 +60,7 @@ export function Hero() {
       id="home"
       className="relative mx-auto grid max-w-6xl scroll-mt-6 items-center overflow-hidden px-5 pt-12 sm:px-8 md:min-h-145 md:grid-cols-2 md:pt-0"
     >
-      <div className="relative z-10 pb-10 md:py-16">
+      <div data-reveal-group className="relative z-10 pb-10 md:py-16">
         <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-lime sm:text-sm">
           Full Stack Engineer
         </p>
@@ -108,6 +108,7 @@ export function Hero() {
           className="absolute inset-0 rounded-full bg-radial from-lime/25 via-purple-600/15 to-transparent blur-3xl"
         />
         <img
+          data-reveal="scale"
           src={portrait}
           alt="Ashutosh Sinha wearing a charcoal suit and blue shirt"
           width="384"
@@ -136,6 +137,7 @@ export function Projects() {
         </button>
       </SectionHeading>
       <div
+        data-reveal-group
         id="project-grid"
         className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
       >
@@ -152,9 +154,10 @@ export function Skills() {
     <section id="skills" className={section}>
       <SectionHeading eyebrow="Tech stack" title="Technical Skills" />
       <div className="grid overflow-hidden rounded-lg border border-white/5 bg-panel lg:grid-cols-[1fr_16rem]">
-        <div className="divide-y divide-white/5">
+        <div data-reveal-group className="divide-y divide-white/5">
           {skillGroups.map((group) => (
             <div
+              data-reveal="left"
               key={group.label}
               className="grid gap-3 px-5 py-4 sm:grid-cols-[7rem_1fr]"
             >
@@ -171,7 +174,10 @@ export function Skills() {
             </div>
           ))}
         </div>
-        <div className="grid gap-6 border-t border-white/5 p-6 sm:grid-cols-2 lg:grid-cols-1 lg:border-t-0 lg:border-l">
+        <div
+          data-reveal-group
+          className="grid gap-6 border-t border-white/5 p-6 sm:grid-cols-2 lg:grid-cols-1 lg:border-t-0 lg:border-l"
+        >
           {capabilities.map(({ icon: Icon, title, text }) => (
             <div key={title} className="flex gap-3">
               <Icon
@@ -206,7 +212,7 @@ export function Experience() {
           View full resume <ExternalLink size={14} />
         </a>
       </SectionHeading>
-      <div className="space-y-8">
+      <div data-reveal-group className="space-y-8">
         {experience.map((job) => (
           <article
             key={job.company}
@@ -247,7 +253,7 @@ export function About() {
   return (
     <section id="about" className={section}>
       <SectionHeading eyebrow="The person behind the code" title="About Me" />
-      <div className="grid gap-8 md:grid-cols-[1.4fr_1fr]">
+      <div data-reveal-group className="grid gap-8 md:grid-cols-[1.4fr_1fr]">
         <p className="text-base leading-relaxed text-zinc-400">
           {profile.summary}
         </p>
@@ -275,7 +281,7 @@ export function About() {
 export function Achievements() {
   return (
     <section className={section} aria-labelledby="achievement-title">
-      <div className="mb-7">
+      <div data-reveal="fade" className="mb-7">
         <p className="mb-2 text-xs uppercase tracking-widest text-lime">
           Achievement
         </p>
@@ -286,7 +292,7 @@ export function Achievements() {
           Problem Solver
         </h2>
       </div>
-      <div className="grid items-center gap-8 sm:grid-cols-3">
+      <div data-reveal-group className="grid items-center gap-8 sm:grid-cols-3">
         <a
           href={profile.leetcode}
           target="_blank"
@@ -296,7 +302,7 @@ export function Achievements() {
           <Code2 size={40} className="text-amber-400" aria-hidden="true" />
           LeetCode
         </a>
-        <div className="text-center">
+        <div data-reveal="scale" className="text-center">
           <p className="text-6xl font-bold tracking-tight text-lime">600+</p>
           <p className="mt-2 text-base font-medium">Problems Solved</p>
           <p className="mt-1 text-sm text-zinc-400">
@@ -334,7 +340,7 @@ export function Contact() {
       id="contact"
       className="mb-10 scroll-mt-6 rounded-lg border border-white/10 bg-linear-to-r from-panel via-purple-950/50 to-lime/50 p-6 sm:p-9"
     >
-      <div className="grid items-center gap-6 md:grid-cols-2">
+      <div data-reveal-group className="grid items-center gap-6 md:grid-cols-2">
         <div>
           <p className="mb-3 text-xs font-medium uppercase tracking-widest text-lime">
             Let's work together
@@ -362,7 +368,10 @@ export function Contact() {
 
 export function Footer() {
   return (
-    <footer className="mx-auto grid max-w-6xl gap-8 px-5 pb-8 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
+    <footer
+      data-reveal-group
+      className="mx-auto grid max-w-6xl gap-8 px-5 pb-8 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]"
+    >
       <div>
         <a href="#home" className="text-3xl font-bold">
           Ashutosh Sinha

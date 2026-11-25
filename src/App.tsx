@@ -1,4 +1,5 @@
 import "./App.css";
+import { useScrollReveal } from "./hooks/useScrollReveal";
 import { Header } from "./components/Header";
 import {
   Hero,
@@ -12,8 +13,12 @@ import {
 } from "./components/PortfolioSections";
 
 export default function App() {
+  const revealRoot = useScrollReveal();
   return (
-    <div className="min-h-screen bg-background font-sans text-zinc-100 selection:bg-lime selection:text-black [&_a]:focus-visible:outline-2 [&_a]:focus-visible:outline-offset-4 [&_a]:focus-visible:outline-lime [&_button]:focus-visible:outline-2 [&_button]:focus-visible:outline-offset-4 [&_button]:focus-visible:outline-lime">
+    <div
+      ref={revealRoot}
+      className="min-h-screen bg-background font-sans text-zinc-100 selection:bg-lime selection:text-black [&_a]:focus-visible:outline-2 [&_a]:focus-visible:outline-offset-4 [&_a]:focus-visible:outline-lime [&_button]:focus-visible:outline-2 [&_button]:focus-visible:outline-offset-4 [&_button]:focus-visible:outline-lime motion-reduce:[&_a]:transition-none motion-reduce:[&_button]:transition-none"
+    >
       <a
         href="#main"
         className="absolute -top-20 left-4 z-50 rounded bg-lime p-3 text-black focus:top-4"

@@ -6,7 +6,10 @@ interface Props {
 }
 export function SectionHeading({ eyebrow, title, children }: Props) {
   return (
-    <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
+    <div
+      data-reveal-group
+      className="mb-7 flex flex-wrap items-end justify-between gap-4"
+    >
       <div>
         <p className="mb-2 text-xs font-medium uppercase tracking-widest text-lime">
           {eyebrow}
