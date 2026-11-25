@@ -2,16 +2,14 @@ import "./App.css";
 import { useScrollReveal } from "./hooks/useScrollReveal";
 import { Header } from "./components/Header";
 import { BackToTop } from "./components/BackToTop";
-import {
-  Hero,
-  Projects,
-  Skills,
-  Experience,
-  About,
-  Achievements,
-  Contact,
-  Footer,
-} from "./components/PortfolioSections";
+import { Hero } from "./components/sections/Hero";
+import { Projects } from "./components/sections/Projects";
+import { Skills } from "./components/sections/Skills";
+import { Experience } from "./components/sections/Experience";
+import { About } from "./components/sections/About";
+import { Achievements } from "./components/sections/Achievements";
+import { Contact } from "./components/sections/Contact";
+import { Footer } from "./components/sections/Footer";
 
 export default function App() {
   const revealRoot = useScrollReveal();

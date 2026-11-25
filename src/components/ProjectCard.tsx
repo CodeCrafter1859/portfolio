@@ -7,8 +7,10 @@ import {
   Plus,
   X,
 } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import type { Project } from "../constants/profile";
+const actionClassName =
+  "flex min-h-11 w-fit items-center gap-3 rounded-full border border-white/15 px-4 text-xs font-medium uppercase tracking-wide transition duration-300 hover:border-lime hover:bg-lime/5 hover:text-lime motion-safe:active:scale-95";
 const themes = {
   orange: "from-orange-950/80 to-background border-orange-900/30",
   teal: "from-teal-950 to-background border-teal-800/30",
@@ -28,6 +30,7 @@ const icons = {
   blue: Layers3,
 };
 export function ProjectCard({ project }: { project: Project }) {
+  const headingId = useId();
   const dialog = useRef<HTMLDialogElement>(null);
   const Icon = icons[project.theme];
   useEffect(() => {
@@ -75,13 +78,13 @@ export function ProjectCard({ project }: { project: Project }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Visit ${project.name} live site (opens in a new tab)`}
-              className="flex min-h-11 w-fit items-center gap-3 rounded-full border border-white/15 px-4 text-xs font-medium uppercase tracking-wide transition duration-300 hover:border-lime hover:bg-lime/5 hover:text-lime motion-safe:active:scale-95"
+              className={actionClassName}
             >
               Live site <ExternalLink size={15} aria-hidden="true" />
             </a>
           )}
           <button
-            className="flex min-h-11 w-fit items-center gap-3 rounded-full border border-white/15 px-4 text-xs font-medium uppercase tracking-wide transition duration-300 hover:border-lime hover:bg-lime/5 hover:text-lime motion-safe:active:scale-95"
+            className={actionClassName}
             onClick={() => {
               dialog.current?.showModal();
               document.body.classList.add("overflow-hidden");
@@ -91,11 +94,21 @@ export function ProjectCard({ project }: { project: Project }) {
           </button>
         </div>
       </article>
+      {/* Native dialog provides Escape handling; this click handler only dismisses the backdrop. */}
+      {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
       <dialog
         ref={dialog}
-        aria-labelledby={`project-${project.theme}`}
+        aria-labelledby={headingId}
         onClick={(event) => {
-          if (event.target === event.currentTarget) dialog.current?.close();
+          if (event.target !== event.currentTarget) return;
+          const bounds = event.currentTarget.getBoundingClientRect();
+          if (
+            event.clientX < bounds.left ||
+            event.clientX > bounds.right ||
+            event.clientY < bounds.top ||
+            event.clientY > bounds.bottom
+          )
+            event.currentTarget.close();
         }}
         className="opacity-0 scale-95 open:opacity-100 open:scale-100 starting:open:opacity-0 starting:open:scale-95 transition-[opacity,scale,display,overlay] transition-discrete duration-300 ease-out motion-reduce:transition-none fixed inset-0 m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-xl border border-white/15 bg-panel p-6 text-white shadow-2xl backdrop:bg-black/80 sm:p-8"
       >
@@ -113,10 +126,7 @@ export function ProjectCard({ project }: { project: Project }) {
             <X size={22} />
           </button>
         </div>
-        <h3
-          id={`project-${project.theme}`}
-          className="mb-4 text-2xl font-semibold"
-        >
+        <h3 id={headingId} className="mb-4 text-2xl font-semibold">
           {project.name}
         </h3>
         <p className="mb-5 text-sm text-lime">{project.stack.join(" · ")}</p>

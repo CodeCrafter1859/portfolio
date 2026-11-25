@@ -48,43 +48,40 @@ export function useScrollReveal() {
       { threshold: 0.08 },
     );
 
-    const register = () => {
-      container.querySelectorAll<HTMLElement>(selector).forEach((element) => {
-        if (registered.has(element)) return;
-        registered.add(element);
-        // Keep content visible with reduced motion, during printing, or without JS.
-        if (preference.matches) {
-          reveal(element, true);
-          return;
-        }
-        const siblings = element.parentElement?.querySelectorAll(
-          ":scope > :not(dialog)",
-        );
-        const index = siblings ? Array.from(siblings).indexOf(element) : 0;
-        const variant = element.dataset.reveal;
-        element.classList.add(
-          ...baseClasses,
-          delays[index % delays.length],
-          "motion-safe:opacity-0",
-          "print:opacity-100",
-          "print:translate-none",
-          "print:scale-100",
-        );
-        if (variant === "left")
-          element.classList.add("motion-safe:-translate-x-3");
-        else if (variant === "scale")
-          element.classList.add("motion-safe:scale-95");
-        else if (variant !== "fade")
-          element.classList.add("motion-safe:translate-y-5");
-        element.dataset.revealed = "false";
-        observer.observe(element);
-      });
-      for (const element of registered) {
-        if (!container.contains(element)) {
-          observer.unobserve(element);
-          registered.delete(element);
-        }
+    const register = (element: HTMLElement) => {
+      if (registered.has(element)) return;
+      registered.add(element);
+      // Keep content visible with reduced motion, during printing, or without JS.
+      if (preference.matches) {
+        reveal(element, true);
+        return;
       }
+      const siblings = element.parentElement?.querySelectorAll(
+        ":scope > :not(dialog)",
+      );
+      const index = siblings ? Array.from(siblings).indexOf(element) : 0;
+      const variant = element.dataset.reveal;
+      element.classList.add(
+        ...baseClasses,
+        delays[index % delays.length],
+        "motion-safe:opacity-0",
+        "print:opacity-100",
+        "print:translate-none",
+        "print:scale-100",
+      );
+      if (variant === "left")
+        element.classList.add("motion-safe:-translate-x-3");
+      else if (variant === "scale")
+        element.classList.add("motion-safe:scale-95");
+      else if (variant !== "fade")
+        element.classList.add("motion-safe:translate-y-5");
+      element.dataset.revealed = "false";
+      observer.observe(element);
+    };
+    const visit = (node: Node, callback: (element: HTMLElement) => void) => {
+      if (!(node instanceof HTMLElement)) return;
+      if (node.matches(selector)) callback(node);
+      node.querySelectorAll<HTMLElement>(selector).forEach(callback);
     };
     const onPreferenceChange = () => {
       if (preference.matches)
@@ -114,8 +111,31 @@ export function useScrollReveal() {
         event.target.classList.remove(...baseClasses, ...delays);
       }
     };
-    register();
-    const mutations = new MutationObserver(register);
+    container.querySelectorAll<HTMLElement>(selector).forEach(register);
+    const mutations = new MutationObserver((records) => {
+      for (const record of records) {
+        for (const node of record.removedNodes) {
+          if (!(node instanceof HTMLElement) || container.contains(node))
+            continue;
+          // Detached group children no longer match the parent selector.
+          for (const element of registered) {
+            if (node === element || node.contains(element)) {
+              observer.unobserve(element);
+              registered.delete(element);
+              element.classList.remove(
+                ...baseClasses,
+                ...delays,
+                ...hiddenClasses,
+              );
+              delete element.dataset.revealed;
+            }
+          }
+        }
+        for (const node of record.addedNodes) {
+          if (container.contains(node)) visit(node, register);
+        }
+      }
+    });
     mutations.observe(container, { childList: true, subtree: true });
     preference.addEventListener("change", onPreferenceChange);
     container.addEventListener("focusin", onFocus);

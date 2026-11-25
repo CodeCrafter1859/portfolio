@@ -1,4 +1,12 @@
 export const profile = {
+  location: "Pune, 411035 · India",
+  education: {
+    degree: "Bachelor of Engineering",
+    subject: "Information Technology",
+    university: "Savitribai Phule Pune University",
+    period: "August 2019 – July 2023 · Ambi, Maharashtra",
+  },
+  achievements: { solved: "600+", ranking: "128K", rating: "1,584" },
   email: "aashusin0015@gmail.com",
   phone: "+91 7517371859",
   github: "https://github.com/CodeCrafter1859",

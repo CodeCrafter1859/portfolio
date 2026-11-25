@@ -6,6 +6,16 @@ export function Header() {
   const [active, setActive] = useState("home");
   const menuButton = useRef<HTMLButtonElement>(null);
   useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      menuButton.current?.focus();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries)
@@ -35,19 +45,13 @@ export function Header() {
           aria-label={open ? "Close navigation" : "Open navigation"}
           aria-expanded={open}
           aria-controls="main-navigation"
-          onClick={() => setOpen(!open)}
+          onClick={() => setOpen((previous) => !previous)}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
         <nav
           id="main-navigation"
           aria-label="Main navigation"
-          onKeyDown={(event) => {
-            if (event.key === "Escape") {
-              setOpen(false);
-              menuButton.current?.focus();
-            }
-          }}
           className={`${open ? "flex" : "hidden"} absolute inset-x-0 top-full mt-2 flex-col rounded-2xl border border-white/10 bg-background p-4 shadow-xl md:static md:mt-0 md:flex md:flex-row md:gap-1 md:border-0 md:bg-transparent md:p-0 md:shadow-none lg:gap-2`}
         >
           {navigation.map((item) => (
